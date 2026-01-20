@@ -13,13 +13,13 @@ if __name__ == '__main__':
         print('未获取到COOKIE变量') 
         cookies = []
         exit(0)
-    url= "https://glados.rocks/api/user/checkin"
-    url2= "https://glados.rocks/api/user/status"
-    referer = 'https://glados.rocks/console/checkin'
-    origin = "https://glados.rocks"
+    url= "https://glados.cloud/api/user/checkin"
+    url2= "https://glados.cloud/api/user/status"
+    referer = 'https://glados.cloud/console/checkin'
+    origin = "https://glados.cloud"
     useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
     payload={
-        'token': 'glados.one'
+        'token': 'glados.cloud'
     }
     for cookie in cookies:
         checkin = requests.post(url,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent,'content-type':'application/json;charset=UTF-8'},data=json.dumps(payload))
@@ -34,7 +34,7 @@ if __name__ == '__main__':
             print(email+'----结果--'+mess+'----剩余('+time+')天')  # 日志输出
             sendContent += email+'----'+mess+'----剩余('+time+')天\n'
         else:
-            requests.get('http://www.pushplus.plus/send?token=' + sckey + '&content='+email+'cookie已失效')
+            requests.get('http://www.pushplus.plus/send?token=' + sckey + '&title=【签到失败】&content='+email+'cookie已失效')
             print('cookie已失效')  # 日志输出
      #--------------------------------------------------------------------------------------------------------#   
     if sckey != "":
