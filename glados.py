@@ -7,6 +7,7 @@ if __name__ == '__main__':
     sckey = os.environ.get("PUSHPLUS_TOKEN", "")
 # 推送内容
     sendContent = ''
+    sendTitle = ''
 # glados账号cookie 直接使用数组 如果使用环境变量需要字符串分割一下
     cookies = os.environ.get("GLADOS_COOKIE", []).split("&")
     if cookies[0] == "":
@@ -36,11 +37,12 @@ if __name__ == '__main__':
             mess = checkin.json()['message']
             print(email+'----结果--'+mess+'----剩余('+time+')天')  # 日志输出
             sendContent += email+'----积分('+point+')----'+mess+'----剩余('+time+')天\n'
+            sendTitle = '剩余 '+time+' 天'+'('+point+')'
         else:
             requests.get('http://www.pushplus.plus/send?token=' + sckey + '&title=【签到失败】&content='+email+'cookie已失效')
             print('cookie已失效')  # 日志输出
      #--------------------------------------------------------------------------------------------------------#   
     if sckey != "":
-         requests.get('http://www.pushplus.plus/send?token=' + sckey + '&title=签到成功'+'&content='+sendContent)
+         requests.get('http://www.pushplus.plus/send?token=' + sckey + '&title='+sendTitle+'&content='+sendContent)
 
 
