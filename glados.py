@@ -27,7 +27,7 @@ if __name__ == '__main__':
         state = requests.get(url2,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
         print(f'[state] {state.json()}')
         if state.json()['code'] == -2:
-            sendTitle = 'GLaDOS 签到任务 Cookie 已失效'
+            sendTitle = 'GLaDOS Cookie 已失效'
             sendContent += 'cookie已失效\n'
             continue
         time = state.json()['data']['leftDays']
