@@ -19,7 +19,7 @@ if __name__ == '__main__':
     url3= "https://glados.rocks/api/user/points"
     referer = 'https://glados.rocks/console/checkin'
     origin = "https://glados.rocks"
-    useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+    useragent = "Mozilla/5.0 (Linux; Android 16; 23127PN0CC Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.199 Mobile Safari/537.36"
     payload={
         'token': 'glados.rocks'
     }
@@ -28,6 +28,7 @@ if __name__ == '__main__':
         state =  requests.get(url2,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
         points =  requests.get(url3,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
     #--------------------------------------------------------------------------------------------------------#  
+        print(state.json())
         time = state.json()['data']['leftDays']
         time_str = str(time)
         time = time_str.split('.')[0]
@@ -44,5 +45,3 @@ if __name__ == '__main__':
      #--------------------------------------------------------------------------------------------------------#   
     if sckey != "":
          requests.get('http://www.pushplus.plus/send?token=' + sckey + '&title='+sendTitle+'&content='+sendContent)
-
-
