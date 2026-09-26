@@ -25,7 +25,7 @@ if __name__ == '__main__':
     }
     for cookie in cookies:
         state = requests.get(url2,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
-        print('[state] ' + state.json())
+        print(f'[state] {state.json()}')
         if state.json()['data'] == -2:
             sendTitle = 'GLaDOS 签到任务 Cookie 已失效'
             sendContent += 'cookie已失效\n'
