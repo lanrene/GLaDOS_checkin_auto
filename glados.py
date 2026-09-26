@@ -7,7 +7,7 @@ if __name__ == '__main__':
     sckey = os.environ.get("PUSHPLUS_TOKEN", "")
 # 推送内容
     sendContent = ''
-    sendTitle = ''
+    sendTitle = 'GLaDOS 签到任务完成'
 # glados账号cookie 直接使用数组 如果使用环境变量需要字符串分割一下
     cookies = os.environ.get("GLADOS_COOKIE", []).split("&")
     if cookies[0] == "":
@@ -24,21 +24,23 @@ if __name__ == '__main__':
         'token': 'glados.rocks'
     }
     for cookie in cookies:
-        checkin = requests.post(url,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent,'content-type':'application/json;charset=UTF-8'},data=json.dumps(payload))
-        state =  requests.get(url2,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
-        points =  requests.get(url3,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
-    #--------------------------------------------------------------------------------------------------------#  
-        print(state.json())
+        state = requests.get(url2,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
+        if state.json() == -2:
+            sendTitle = 'GLaDOS 签到任务 Cookie 已失效'
+            sendContent += 'cookie已失效\n'
+            continue
         time = state.json()['data']['leftDays']
         time_str = str(time)
         time = time_str.split('.')[0]
         email = state.json()['data']['email']
-        point = points.json()['points'].split('.')[0]
+        
+        checkin = requests.post(url,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent,'content-type':'application/json;charset=UTF-8'},data=json.dumps(payload))       
         if 'message' in checkin.text:
             mess = checkin.json()['message']
             print(email+'----结果--'+mess+'----剩余('+time+')天')  # 日志输出
+            points = requests.get(url3,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent})
+            point = points.json()['points'].split('.')[0]
             sendContent += email+'----积分('+point+')----'+mess+'----剩余('+time+')天\n'
-            sendTitle = '剩余 '+time+' 天'+'('+point+')'
         else:
             requests.get('http://www.pushplus.plus/send?token=' + sckey + '&title=【签到失败】&content='+email+'cookie已失效')
             print('cookie已失效')  # 日志输出
