@@ -14,14 +14,14 @@ if __name__ == '__main__':
         print('未获取到COOKIE变量') 
         cookies = []
         exit(0)
-    url= "https://glados.cloud/api/user/checkin"
-    url2= "https://glados.cloud/api/user/status"
-    url3= "https://glados.space/api/user/points"
-    referer = 'https://glados.cloud/console/checkin'
-    origin = "https://glados.cloud"
+    url= "https://glados.rocks/api/user/checkin"
+    url2= "https://glados.rocks/api/user/status"
+    url3= "https://glados.rocks/api/user/points"
+    referer = 'https://glados.rocks/console/checkin'
+    origin = "https://glados.rocks"
     useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
     payload={
-        'token': 'glados.cloud'
+        'token': 'glados.rocks'
     }
     for cookie in cookies:
         checkin = requests.post(url,headers={'cookie': cookie ,'referer': referer,'origin':origin,'user-agent':useragent,'content-type':'application/json;charset=UTF-8'},data=json.dumps(payload))
