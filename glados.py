@@ -30,7 +30,7 @@ if __name__ == "__main__":
         print(f"[state] {state.json()}")
         if state.json()["code"] == -2:
             sendTitle = "GLaDOS Cookie 已失效"
-            sendContent += "cookie已失效\n"
+            sendContent += "cookie已失效\n\n"
             continue
         time = state.json()["data"]["leftDays"]
         time_str = str(time)
@@ -40,7 +40,8 @@ if __name__ == "__main__":
         checkin = requests.post(checkinUrl,headers={"cookie": cookie ,"origin": origin, "user-agent": useragent, "content-type": "application/json;charset=UTF-8"}, data=json.dumps({"token": domain}))       
         if "message" in checkin.text:
             mess = checkin.json()["message"]
-            print(email+"----结果--"+mess+"----剩余("+time+")天")  # 日志输出
+            print(email + "----结果--" + mess)
+            
             points = requests.get(pointsUrl,headers={"cookie": cookie ,"origin": origin, "user-agent": useragent})
             point = int(points.json()["points"].split(".")[0])
             
@@ -57,10 +58,10 @@ if __name__ == "__main__":
                     print(f"自动兑换失败，{exchange.json()}")
                     exchangeMessage = "----❌ 自动兑换失败"
                      
-            sendContent += email + exchangeMessage + "----积分("+point+")----"+mess+"----剩余("+time+")天\n"
+            sendContent += email + "---" + mess + exchangeMessage + "----积分(" + point + ")----剩余("  + time + ")天\n\n"
         else:
             requests.get("http://www.pushplus.plus/send?token=" + sckey + "&title=【签到失败】&content="+email+"cookie已失效")
-            print("cookie已失效")  # 日志输出
+            print("cookie已失效")
     
     #--------------------------------------------------------------------------------------------------------#   
     if sckey != "":
