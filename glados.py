@@ -46,7 +46,7 @@ if __name__ == "__main__":
             point = int(points.json()["points"].split(".")[0])
             
             exchangeMessage = ""
-            if point>= 500:
+            if point >= 500:
                 print(f"积分已达{point}，开始兑换天数")
                 exchange = requests.post(exchangeUrl,headers={"cookie": cookie ,"origin": origin, "user-agent": useragent, "content-type": "application/json;charset=UTF-8"}, data=json.dumps({"planType": "plan500"}))
                 if exchange.json()["code"] == 0:
@@ -58,7 +58,7 @@ if __name__ == "__main__":
                     print(f"自动兑换失败，{exchange.json()}")
                     exchangeMessage = "----❌ 自动兑换失败"
                      
-            sendContent += email + "---" + mess + exchangeMessage + "----积分(" + point + ")----剩余("  + time + ")天\n\n"
+            sendContent += email + "---" + mess + exchangeMessage + f"----积分({point})----剩余({time})天\n\n"
         else:
             requests.get("http://www.pushplus.plus/send?token=" + sckey + "&title=【签到失败】&content="+email+"cookie已失效")
             print("cookie已失效")
