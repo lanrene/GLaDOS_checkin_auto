@@ -38,7 +38,7 @@ if __name__ == "__main__":
             sendContent += f"{state_json.get('message', '未知错误')}\n\n"
             continue
         state_data = state_json.get("data", {})
-        left_days = int(state_data.get("leftDays", 0))
+        left_days = int(float(state_data.get("leftDays", "0")))
         email = state_data.get("email", "")
         
         checkin = requests.post(checkinUrl, headers=headers, data=json.dumps({"token": domain}))
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             print(f"{email}----结果----{mess}")
             
             points = requests.get(pointsUrl, headers=headers)
-            point = int(points.json().get("points", 0))
+            point = int(points.json().get("points", "0"))
             
             exchangeMessage = ""
             if point >= 500:
