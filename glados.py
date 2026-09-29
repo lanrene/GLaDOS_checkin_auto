@@ -43,7 +43,6 @@ if __name__ == "__main__":
         
         checkin = requests.post(checkinUrl, headers=headers, data=json.dumps({"token": domain}))
         checkin_json = checkin.json()
-        print(f"[checkin] {checkin_json}")
         if "message" in checkin.text:
             mess = checkin_json.get("message")
             print(f"{email}----结果----{mess}")
@@ -73,4 +72,4 @@ if __name__ == "__main__":
     
     #--------------------------------------------------------------------------------------------------------#   
     if sckey != "":
-         requests.get("http://www.pushplus.plus/send", params={"token": sckey, "title": sendTitle, "content=": sendContent})
+         requests.get("http://www.pushplus.plus/send", params={"token": sckey, "title": sendTitle, "content": sendContent})
