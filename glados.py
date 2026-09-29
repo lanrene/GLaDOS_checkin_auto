@@ -49,7 +49,7 @@ if __name__ == "__main__":
             print(f"{email}----结果----{mess}")
             
             points = requests.get(pointsUrl, headers=headers)
-            point = int(points.json().get("points", "0"))
+            point = int(float(points.json().get("points", "0")))
             
             exchangeMessage = ""
             if point >= 500:
