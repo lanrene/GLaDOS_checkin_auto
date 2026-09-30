@@ -72,4 +72,7 @@ if __name__ == "__main__":
     
     #--------------------------------------------------------------------------------------------------------#   
     if sckey != "":
-         requests.get("http://www.pushplus.plus/send", params={"token": sckey, "title": sendTitle, "content": sendContent})
+        push_res = requests.get("http://www.pushplus.plus/send", params={"token": sckey, "title": sendTitle, "content": sendContent})
+        print(f"[pushplus 推送] {push_res.json()}")
+    else:
+        print("pushplus token 未配置")
